@@ -1,3 +1,15 @@
+<?php 
+  include("function.php");
+
+  $objCrudAdmin = new crudApp();
+
+
+  if(isset($_POST['add_info'])){
+    $return_msg = $objCrudAdmin->add_data($_POST);
+  }
+?>
+
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -14,11 +26,40 @@
     <div class="container my-4 p-4 shadow">
         <h2><a href="index.php">DarunIT Student Database</a></h2>
         <form action="" method="POST" enctype="multipart/form-data">
+            <?php if(isset($return_msg)){echo $return_msg;} ?>
             <input class="form-control mb-2" type="text" name="std_name" placeholder="Enter Your name">
-            <input class="form-conrol mb-2"  type="number" name="std_roll" placeholder="Enter Your Roll">
+            <input class="form-conrol mb-2"  type="number" name="std_roll" placeholder="Enter Your Roll"> <br>
             <label for="image">Upload Your Image</label>
             <input class="form-control mb-2" type="file" name="std_img">
+            <input class="form-control bg-warning " type="submit" value="Add Information" name="add_info">
         </form>
+
+    </div>
+    <div class="container my-4 p-4 shadow">
+        <table class="table table-responsive">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Roll</th>
+              <th>Image</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>Asib</td>
+              <td>123</td>
+              <td></td>
+              <td>
+                <a class="btn btn-success" href="#">Edit</a>
+                <a class="btn btn-warning" href="#">Delete</a>
+              </td>
+            </tr>
+          </tbody>
+
+        </table>
 
     </div>
 

@@ -7,6 +7,16 @@
   if(isset($_POST['add_info'])){
     $return_msg = $objCrudAdmin->add_data($_POST);
   }
+
+  $students = $objCrudAdmin->display_data();
+
+  if(isset($_GET['status'])){
+    if($_GET['status']='delete'){
+      $delete_id =$_GET['id'];
+      $delmsg = $objCrudAdmin->delete_data($delete_id);
+
+    }
+  }
 ?>
 
 
@@ -25,6 +35,7 @@
   <body>
     <div class="container my-4 p-4 shadow">
         <h2><a href="index.php">DarunIT Student Database</a></h2>
+         <?php if(isset($delmsg)){echo $delmsg;} ?>
         <form action="" method="POST" enctype="multipart/form-data">
             <?php if(isset($return_msg)){echo $return_msg;} ?>
             <input class="form-control mb-2" type="text" name="std_name" placeholder="Enter Your name">
@@ -47,16 +58,18 @@
             </tr>
           </thead>
           <tbody>
+            <?php while($student=mysqli_fetch_assoc($students)){ ?>
             <tr>
-              <td>1</td>
-              <td>Asib</td>
-              <td>123</td>
-              <td></td>
+              <td><?php echo $student['id'] ?></td>
+              <td><?php echo $student['std_name'] ?></td>
+              <td><?php echo $student['std_roll'] ?></td>
+              <td><img style="height: 50px" src="upload/<?php echo $student['std_img'] ?>"></td>
               <td>
-                <a class="btn btn-success" href="#">Edit</a>
-                <a class="btn btn-warning" href="#">Delete</a>
+                <a class="btn btn-success" href="edit.php? status=edit&&id=<?php echo $student['id'] ?>">Edit</a>
+                <a class="btn btn-warning" href="?staus=delete&&id=<?php echo $student['id'] ?>">Delete</a>
               </td>
             </tr>
+            <?php } ?>
           </tbody>
 
         </table>
